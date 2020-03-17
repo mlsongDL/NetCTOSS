@@ -14,18 +14,18 @@
                     <tr>
                         <td class="login_info">账号：</td>
                         <td colspan="2"><input name="username" type="text" class="width150" /></td>
-                        <td class="login_error_info"><span class="required">30长度的字母、数字和下划线</span></td>
+                        <td class="login_error_info"><span class="required"></span></td>
                     </tr>
                     <tr>
                         <td class="login_info">密码：</td>
                         <td colspan="2"><input name="password" type="password" class="width150" /></td>
-                        <td><span class="required">30长度的字母、数字和下划线</span></td>
+                        <td><span class="required"></span></td>
                     </tr>
                     <tr>
                         <td class="login_info">验证码：</td>
                         <td class="width70"><input name="captcha" type="text" class="width70" /></td>
                         <td><img src="images/valicode.jpg" alt="验证码" title="点击更换" /></td>
-                        <td><span class="required">验证码错误</span></td>
+                        <td><span class="required"></span></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -33,7 +33,7 @@
                             <input type="submit" value="提交">
                             <%--<a href="index.html"><img src="images/login_btn.png" /></a>--%>
                         </td>
-                        <td><span class="required">用户名或密码错误，请重试</span></td>
+                        <td><span class="required">${param.msg}</span></td>
                     </tr>
                 </table>
             </form>
