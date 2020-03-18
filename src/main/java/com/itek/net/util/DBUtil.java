@@ -30,6 +30,7 @@ public class DBUtil {
     static {
         Properties prop = new Properties();
         try {
+            // classpath路径下加载文件
             prop.load(DBUtil.class.getClassLoader().getResourceAsStream("jdbc.properties"));
         } catch (IOException e) {
             System.out.println("加载配置文件失败！");

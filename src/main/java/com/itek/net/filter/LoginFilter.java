@@ -37,13 +37,16 @@ public class LoginFilter implements Filter {
         // 进入到servlet之前代码
         HttpServletRequest request = (HttpServletRequest)req;
         HttpServletResponse response = (HttpServletResponse)resp;
+        String ctx = request.getContextPath();
 
         // 对登录页面的请求，进行放行
         String uri = request.getRequestURI();
+        // /net/资源请求路径...
 
         // 如果不是登录页面进行用户的登录验证
         // 还需要过滤掉登录验证的check.login请求
-        if (!uri.endsWith("page.login") && !uri.endsWith("check.login")) {
+        if (!uri.endsWith("page.login") && !uri.endsWith("check.login")
+            && !uri.startsWith(ctx + "/styles") && !uri.startsWith(ctx + "/images")) {
             // 验证用户是否已经登录，验证session中是否已经存在登录成功的标识
             HttpSession session = request.getSession();
             Account loginUser = (Account)session.getAttribute("loginUser");

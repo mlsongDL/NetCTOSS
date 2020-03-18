@@ -15,6 +15,7 @@ import java.util.Objects;
  * @create: 2020-03-17 16:27
  **/
 public class Account {
+
     // 使用包装类，接收数据库中的字段
     private Integer id;         // account表中id字段
     private String loginName;   // account表中login_name字段

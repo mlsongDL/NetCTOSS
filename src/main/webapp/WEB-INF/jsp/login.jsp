@@ -1,15 +1,19 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String ctx = request.getContextPath();
+    request.setAttribute("ctx", ctx);
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>宏晶信息－NetCTOSS</title>
-        <link type="text/css" rel="stylesheet" media="all" href="styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="styles/global_color.css" /> 
+        <link type="text/css" rel="stylesheet" media="all" href="${ctx}/styles/global.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="${ctx}/styles/global_color.css" />
     </head>
     <body class="index">
         <div class="login_box">
-            <form action="/net/check.login" method="post">
+            <form action="${ctx}/check.login" method="post">
                 <table>
                     <tr>
                         <td class="login_info">账号：</td>

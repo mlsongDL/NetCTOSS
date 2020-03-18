@@ -54,6 +54,11 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        // 获取项目的名称
+        System.out.println(req.getContextPath());
+
+
         // 所有和登录相关的业务都在此servlet中进行处理
         String uri = req.getRequestURI();
         // 解析请求的路径

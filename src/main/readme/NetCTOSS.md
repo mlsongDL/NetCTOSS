@@ -169,3 +169,28 @@ account表中的每一条记录，都可以用Account实体类对象进行存储
 
 ![1584434160742](.\img\1584434160742.png) 
 
+
+
+
+
+
+
+
+
+### Java Web项目目录说明
+
+![1584511416629](.\img\1584511416629.png) 
+
+java: 蓝色文件夹
+
+resources：灰色+圆柱体文件夹
+
+classpath路径
+
+Tomcat目录下webapps文件夹下
+
+ - 项目名
+    - /WEB-INF
+      	- classes:  classpath路径下的文件都会部署到classes文件夹下
+      	- lib
+
