@@ -92,3 +92,80 @@ maven: 自动化项目构建管理工具
 1.4 WEB-INF下的内容，必须要使用转发机制才能访问到
 ```
 
+```
+转发和重定向
+	转发：
+		1. 地址栏不会变
+		2. 浏览器发送一次请求
+		3. 共享数据
+	重定向：
+		1. 地址栏会发生变化
+		2. 浏览器发送两次请求
+		3. 不共享数据
+		
+check.login  如果用户校验不通过，转发到login.jsp
+url : check.login    页面：login.jsp    url和页面不匹配
+
+check.login  如果用户校验不通过，需要重定向到page.login中
+
+```
+
+#### 1.2 登录拦截校验，验证用户是否已经登录，是否有权限访问系统的其他功能
+
+```java
+添加过滤器，完成用户的登录校验
+ // 验证用户是否已经登录，验证session中是否已经存在登录成功的标识
+ HttpSession session = request.getSession();
+ Boolean isLogin = (Boolean)session.getAttribute("isLogin");
+
+if (isLogin == null || isLogin != true) {
+// 用户尚未登录，跳转到登录页
+// 转发到login.jsp  还是重定向到page.login
+response.sendRedirect("/net/page.login");
+return;
+    
+// 请求登录页面的时候，让过滤器放行，不需要进行登录验证
+if (!uri.endsWith("page.login")) {
+    // 验证用户是否已经登录，验证session中是否已经存在登录成功的标识
+    HttpSession session = request.getSession();
+    Boolean isLogin = (Boolean)session.getAttribute("isLogin");
+
+    if (isLogin == null || isLogin != true) {
+        // 用户尚未登录，跳转到登录页
+        // 转发到login.jsp  还是重定向到page.login
+        response.sendRedirect("/net/page.login");
+        return;
+    }
+}
+    
+// 还需要过滤掉登录验证的check.login请求 
+```
+
+#### 1.3 项目结构中的DAO
+
+```
+DAO: Data Access Object 数据访问对象（数据访问层）
+直接和数据库打交道，将所有数据库的操作封装到DAO
+```
+
+#### 1.4 实体类的设计
+
+```
+用实体类属性接收数据库表中的数据记录
+
+account表  ->  java  Account实体类
+
+实体中的属性，和表中的字段一一对应，用来存储数据库字段的值
+
+account表中的每一条记录，都可以用Account实体类对象进行存储
+
+
+实体类中的属性如果是基本数据类型，最号使用其包装类型接收字段数据
+```
+
+![1584433381786](.\img\1584433381786.png)
+
+![1584433509174](.\img\1584433509174.png)
+
+![1584434160742](.\img\1584434160742.png) 
+
