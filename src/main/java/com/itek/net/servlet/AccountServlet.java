@@ -36,6 +36,8 @@ public class AccountServlet extends HttpServlet {
      */
     private AccountService accountService;
 
+    public static final int PAGE_SIZE = 3;
+
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,30 +49,51 @@ public class AccountServlet extends HttpServlet {
         switch (path) {
             case "list":
                 // 从account表中查询表中的记录
-//                List<Account> accounts = accountService.findAccounts();
-                List<Account> accounts = new ArrayList<>();
-                Account account = new Account();
+                // V1.0从account表中查询全部记录
+//                List<Account> accounts = accountService.findAllAccounts();
+                // V2.0可以接收分页数据，进行分页数据查询
+                String pageNoStr = req.getParameter("pageNo");
+                String pageSizeStr = req.getParameter("pageSize");
+                int pageNo = 1;
+                try {
+                    pageNo = Integer.parseInt(pageNoStr);
+                } catch (Exception e) {
+                    System.out.println("pageNo格式输入有误！pageNo默认设置为1");
+                    pageNo = 1;
+                }
+                int pageSize = PAGE_SIZE;
+                try {
+                    pageSize = Integer.parseInt(pageSizeStr);
+                    if (pageSize <= 0) {
+                        pageSize = PAGE_SIZE;
+                    }
+                } catch (Exception e) {
+                    System.out.println("pageSize格式输入有误！pageSize默认设置为常量值");
+                    pageSize = PAGE_SIZE;
+                }
+                // 根据页码和每页显式的记录条数查询数据
+                List<Account> accounts = accountService.findAccountsByPage(pageNo, pageSize);
 
-                account.setStatus("1");
-                account.setRealName("zhangsan");
-                account.setLoginName("szhang");
-                account.setIdcardNo("12321313221312");
+                // 查询数据总记录条数
+                double totalCount = accountService.findAccountsCount();
 
-                Account account2 = new Account();
+                // 计算总页数
+                int totalPage = (int)Math.ceil(totalCount/pageSize);
 
-                account2.setStatus("2");
-                account2.setRealName("lisi");
-                account2.setLoginName("sli");
-                account2.setIdcardNo("23456789");
 
-                accounts.add(account);
-                accounts.add(account2);
+                // V3.0 再页面上点击搜索按钮，向list.acc发送身份证号，姓名，登录名以及状态等信息
+                // 根据以上提交过来的信息进行数据的分页+模糊查询
+                // like '% _'
 
 
 
-                // TODO 将查询数据绑定到jsp页面
-                // request / session / servletContext  / pageContext
+
+                // 将查询数据绑定到jsp页面
                 req.setAttribute("accounts", accounts);
+                req.setAttribute("totalPage", totalPage);
+                // 当前页面显示的页码
+                req.setAttribute("curPage", pageNo);
+
 
                 // 转发到账务账号模块页面jsp
                 req.getRequestDispatcher("/WEB-INF/jsp/account/account_list.jsp")

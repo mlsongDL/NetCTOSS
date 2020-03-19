@@ -1,11 +1,15 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ctx = request.getContextPath();
+    pageContext.setAttribute("ctx", ctx);
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>宏晶信息－NetCTOSS</title>
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" /> 
+        <link type="text/css" rel="stylesheet" media="all" href="${ctx}/styles/global.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="${ctx}/styles/global_color.css" />
         <script language="javascript" type="text/javascript">
             //删除
             function deleteAccount() {
@@ -22,7 +26,7 @@
     <body>
         <!--Logo区域开始-->
         <div id="header">
-            <img src="../images/logo.png" alt="logo" class="left"/>
+            <img src="${ctx}/images/logo.png" alt="logo" class="left"/>
             <a href="#">[退出]</a>            
         </div>
         <!--Logo区域结束-->
@@ -64,7 +68,7 @@
                 </div>
                 <!--删除等的操作提示-->
                 <div id="operate_result_info" class="operate_success">
-                    <img src="../images/close.png" onclick="this.parentNode.style.display='none';" />
+                    <img src="${ctx}/images/close.png" onclick="this.parentNode.style.display='none';" />
                     删除成功，且已删除其下属的业务账号！
                 </div>   
                 <!--数据区域：用表格展示数据-->     
@@ -88,7 +92,7 @@
                         --%>
                     <c:forEach var="account" items="${accounts}">
                         <tr>
-                            <td>1</td>
+                            <td>${account.id}</td>
                             <td><a href="account_detail.html">${account.realName}</a></td>
                             <td>${account.idcardNo}</td>
                             <td>${account.loginName}</td>
@@ -103,8 +107,8 @@
                                     <td>删除</td>
                                 </c:when>
                             </c:choose>
-                            <td>2013-01-23</td>
-                            <td>2013-02-23 00:00:00</td>
+                            <td>${account.createDate}</td>
+                            <td>${account.lastLoginTime}</td>
                             <td class="td_modi">
                                 <input type="button" value="暂停" class="btn_pause" onclick="setState();" />
                                 <input type="button" value="修改" class="btn_modify" onclick="location.href='account_modi.html';" />
@@ -114,73 +118,6 @@
                     </c:forEach>
 
 
-                    <%--<tr>
-                        <td>1</td>
-                        <td><a href="account_detail.html">红日</a></td>
-                        <td>340122199702137862</td>
-                        <td>jiaqiang</td>
-                        <td>开通</td>
-                        <td>2013-01-23</td>
-                        <td>2013-02-23 00:00:00</td>                            
-                        <td class="td_modi">
-                            <input type="button" value="暂停" class="btn_pause" onclick="setState();" />
-                            <input type="button" value="修改" class="btn_modify" onclick="location.href='account_modi.html';" />
-                            <input type="button" value="删除" class="btn_delete" onclick="deleteAccount();" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a href="account_detail.html">红日</a></td>
-                        <td>340122199702137862</td>
-                        <td>jiaqiang</td>
-                        <td>暂停</td>
-                        <td>2013-01-23</td>
-                        <td>2013-02-23 00:00:00</td>                            
-                        <td class="td_modi">
-                            <input type="button" value="开通" class="btn_start" onclick="setState();" />
-                            <input type="button" value="修改" class="btn_modify" onclick="location.href='account_modi.html';" />
-                            <input type="button" value="删除" class="btn_delete" onclick="deleteAccount();" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><a href="account_detail.html">红日</a></td>
-                        <td>340122199702137862</td>
-                        <td>jiaqiang</td>
-                        <td>删除</td>
-                        <td>2013-01-23</td>
-                        <td>2013-02-23 00:00:00</td>                            
-                        <td class="td_modi">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td><a href="account_detail.html">红日</a></td>
-                        <td>340122199702137862</td>
-                        <td>jiaqiang</td>
-                        <td>开通</td>
-                        <td>2013-01-23</td>
-                        <td>2013-02-23 00:00:00</td>                            
-                        <td class="td_modi">
-                            <input type="button" value="暂停" class="btn_pause" onclick="setState();" />
-                            <input type="button" value="修改" class="btn_modify" onclick="location.href='account_modi.html';" />
-                            <input type="button" value="删除" class="btn_delete" onclick="deleteAccount();" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td><a href="account_detail.html">红日</a></td>
-                        <td>340122199702137862</td>
-                        <td>jiaqiang</td>
-                        <td>暂停</td>
-                        <td>2013-01-23</td>
-                        <td>2013-02-23 00:00:00</td>                            
-                        <td class="td_modi">
-                            <input type="button" value="开通" class="btn_start" onclick="setState();" />
-                            <input type="button" value="修改" class="btn_modify" onclick="location.href='account_modi.html';" />
-                            <input type="button" value="删除" class="btn_delete" onclick="deleteAccount();" />
-                        </td>
-                    </tr> --%>
                 </table>
                 <p>业务说明：<br />
                 1、创建则开通，记载创建时间；<br />
@@ -192,17 +129,48 @@
                 7、删除账务账号，同时删除下属的所有业务账号。</p>
                 </div>                   
                 <!--分页-->
-                <div id="pages">
-                    <a href="#">首页</a>
+                <%--<div id="pages">
+                    <a href="${ctx}/list.acc">首页${totalPage}</a>
         	        <a href="#">上一页</a>
-                    <a href="#" class="current_page">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
+                    <a href="javascript:void(0);" onclick="goPage(1);" class="current_page">1</a>
+                    <a href="javascript:void(0);" onclick="goPage(2);">2</a>
+                    <a href="javascript:void(0);" onclick="goPage(3);">3</a>
+                    <a href="javascript:void(0);" onclick="goPage(4);">4</a>
+                    <a href="javascript:void(0);" onclick="goPage(5);">5</a>
                     <a href="#">下一页</a>
                     <a href="#">末页</a>
-                </div>                    
+                </div>     --%>
+
+                <div id="pages">
+                    <a href="javascript:void(0);" onclick="goPage(1);">首页${curPage}</a>
+                    <a href="javascript:void(0);" onclick="goPage(${curPage - 1})">上一页</a>
+
+                    <%-- 总页数，小于等于5页， 有多少页，显示多少也 --%>
+                    <c:if test="${totalPage <= 5}">
+                        <c:forEach begin="1" end="${totalPage}" step="1" var="count">
+                            <c:choose>
+                                <c:when test="${count == curPage}">
+                                    <a href="javascript:void(0);" class="current_page" onclick="goPage(${count});">${count}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="javascript:void(0);" onclick="goPage(${count});">${count}</a>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                    </c:if>
+
+                    <%-- 总页数，大于5页， 有多少页，显示多少也 --%>
+                    <c:if test="${totalPage > 5}">
+
+                    </c:if>
+
+                    <a href="javascript:void(0);" onclick="goPage(${curPage + 1});">下一页</a>
+                    <a href="javascript:void(0);" onclick="goPage(${totalPage});">末页</a>
+                </div>
+
+
+
             </form>
         </div>
         <!--主要区域结束-->
@@ -210,5 +178,25 @@
             <p>[地址：合肥市高新区云飞路与文曲路交口创新产业园二期F4栋12层]</p>
             <p>版权所有&copy;合肥宏晶信息科技有限公司 </p>
         </div>
+
+
+    <script>
+        /**
+         * 跳转页面
+         * @param pageNo
+         */
+        function goPage(pageNo) {
+            if (pageNo <= 0) {
+                pageNo = 1;
+            }
+
+            if (pageNo > '${totalPage}') {
+                pageNo = '${totalPage}';
+            }
+
+
+            location.href = '${ctx}' + '/list.acc?pageNo=' + pageNo;
+        }
+    </script>
     </body>
 </html>

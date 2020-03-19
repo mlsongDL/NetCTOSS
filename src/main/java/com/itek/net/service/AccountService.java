@@ -6,6 +6,9 @@
 package com.itek.net.service;
 
 import com.itek.net.dao.AccountDAO;
+import com.itek.net.domain.Account;
+
+import java.util.List;
 
 /**
  * @program: net
@@ -24,4 +27,27 @@ public class AccountService {
      */
     private AccountDAO accountDAO;
 
+    /**
+     * 查询用户记录  account
+     * @return
+     */
+    public List<Account> findAllAccounts() {
+        return accountDAO.selectAll();
+    }
+
+    /**
+     * 根据页码和每页显式的记录条数查询数据
+     * @param pageNo
+     *      页码
+     * @param pageSize
+     *      页面大小
+     * @return
+     */
+    public List<Account> findAccountsByPage(int pageNo, int pageSize) {
+        return accountDAO.selectByPage(pageNo, pageSize);
+    }
+
+    public int findAccountsCount() {
+        return accountDAO.count();
+    }
 }

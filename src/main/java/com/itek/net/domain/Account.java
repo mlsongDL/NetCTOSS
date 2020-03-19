@@ -24,6 +24,18 @@ public class Account {
     private Date createDate;    // create_date字段
     private String realName;    // real_name
     private String idcardNo;    // idcard_no字段
+    private Date lastLoginTime;   // last_login_time
+
+    // lombok组件
+
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
     public Integer getId() {
         return id;
@@ -92,12 +104,13 @@ public class Account {
                 Objects.equals(status, account.status) &&
                 Objects.equals(createDate, account.createDate) &&
                 Objects.equals(realName, account.realName) &&
-                Objects.equals(idcardNo, account.idcardNo);
+                Objects.equals(idcardNo, account.idcardNo) &&
+                Objects.equals(lastLoginTime, account.lastLoginTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loginName, loginPwd, status, createDate, realName, idcardNo);
+        return Objects.hash(id, loginName, loginPwd, status, createDate, realName, idcardNo, lastLoginTime);
     }
 
     @Override
@@ -110,6 +123,7 @@ public class Account {
                 ", createDate=" + createDate +
                 ", realName='" + realName + '\'' +
                 ", idcardNo='" + idcardNo + '\'' +
+                ", lastLoginTime=" + lastLoginTime +
                 '}';
     }
 }
