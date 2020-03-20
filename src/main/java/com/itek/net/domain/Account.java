@@ -26,6 +26,25 @@ public class Account {
     private String idcardNo;    // idcard_no字段
     private Date lastLoginTime;   // last_login_time
 
+    private int pageNo;
+    private int pageSize;
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     // lombok组件
 
 
@@ -98,7 +117,9 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(id, account.id) &&
+        return pageNo == account.pageNo &&
+                pageSize == account.pageSize &&
+                Objects.equals(id, account.id) &&
                 Objects.equals(loginName, account.loginName) &&
                 Objects.equals(loginPwd, account.loginPwd) &&
                 Objects.equals(status, account.status) &&
@@ -110,7 +131,7 @@ public class Account {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loginName, loginPwd, status, createDate, realName, idcardNo, lastLoginTime);
+        return Objects.hash(id, loginName, loginPwd, status, createDate, realName, idcardNo, lastLoginTime, pageNo, pageSize);
     }
 
     @Override
@@ -124,6 +145,8 @@ public class Account {
                 ", realName='" + realName + '\'' +
                 ", idcardNo='" + idcardNo + '\'' +
                 ", lastLoginTime=" + lastLoginTime +
+                ", pageNo=" + pageNo +
+                ", pageSize=" + pageSize +
                 '}';
     }
 }

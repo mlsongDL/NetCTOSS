@@ -50,4 +50,14 @@ public class AccountService {
     public int findAccountsCount() {
         return accountDAO.count();
     }
+
+    /**
+     * 根据条件进行账号信息查询
+     * @param acc
+     *      查询条件
+     * @return
+     */
+    public List<Account> findAccountsByConditions(Account acc) {
+        return accountDAO.selectByConditions(acc);
+    }
 }

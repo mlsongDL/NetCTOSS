@@ -48,22 +48,22 @@
         <!--导航区域结束-->
         <!--主要区域开始-->
         <div id="main">
-            <form action="" method="">
+            <form action="${ctx}/list.acc" method="get">
                 <!--查询-->
                 <div class="search_add">                        
-                    <div>身份证：<input type="text" value="不验证" class="text_search" /></div>                            
-                    <div>姓名：<input type="text" class="width70 text_search" value="不验证" /></div>
-                    <div>登录名：<input type="text"  value="不验证" class="text_search"" /></div>
+                    <div>身份证：<input type="text" name="idcardNo" class="text_search" /></div>
+                    <div>姓名：<input type="text" name="realName" class="width70 text_search" /></div>
+                    <div>登录名：<input type="text" name="loginName"  class="text_search" /></div>
                     <div>
                         状态：
-                        <select class="select_search">
-                            <option>全部</option>
-                            <option>开通</option>
-                            <option>暂停</option>
-                            <option>删除</option>
+                        <select class="select_search" name="status">
+                            <option value="-1">全部</option>
+                            <option value="0">开通</option>
+                            <option value="1">暂停</option>
+                            <option value="2">删除</option>
                         </select>
                     </div>
-                    <div><input type="button" value="搜索" class="btn_search" /></div>
+                    <div><input type="submit" value="搜索" class="btn_search" /></div>
                     <input type="button" value="增加" class="btn_add" onclick="location.href='account_add.html';" />
                 </div>
                 <!--删除等的操作提示-->

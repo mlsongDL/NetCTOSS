@@ -228,4 +228,79 @@ public class AccountDAO {
         }
         return 0;
     }
+
+    /**
+     * 根据条件查询
+     * @param acc
+     * @return
+     */
+    public List<Account> selectByConditions(Account acc) {
+
+        // 1. 构造sql
+        String sql = "select * from account where login_name like ? and real_name like ? and idcard_no like ?";
+
+        if (!"-1".equals(acc.getStatus())) {
+            sql += " and status = ?";
+        }
+
+        // 判断是否传入loginName参数,
+       /* if (acc.getLoginName() != null && !"".equals(acc.getLoginName().trim())) {
+//            sb.append(" and login_name like ? ");
+//            sb.append(" and login_name like '%" + acc.getLoginName() + "%' ");
+        }
+        if (acc.getIdcardNo() != null && !"".equals(acc.getIdcardNo().trim())) {
+//            sb.append(" and idcard_no like ? ");
+//            sb.append(" and idcard_no like '%" + acc.getIdcardNo() + "%' ");
+        }
+        if (acc.getRealName() != null && !"".equals(acc.getRealName().trim())) {
+//            sb.append(" and real_name like ? ");
+//            sb.append(" and real_name like '%" + acc.getRealName() + "%' ");
+        }
+        if (acc.getStatus() != null && !"".equals(acc.getStatus()) && !"-1".equals(acc.getStatus())) {
+//            sb.append(" and status = ?");
+//            sb.append(" and status = '" + acc.getStatus() + "' ");
+        }*/
+
+
+        // 1. 获取连接
+        Connection conn = DBUtil.getConnection();
+        List<Account> accounts = new ArrayList<>(acc.getPageSize());
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + acc.getLoginName().trim() + "%");
+            ps.setString(2, "%" + acc.getRealName().trim() + "%");
+            ps.setString(3, "%" + acc.getIdcardNo().trim()  + "%");
+            if (!"-1".equals(acc.getStatus())) {
+                ps.setString(4, acc.getStatus());
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            // 返回结果集可能为空，也可能有数据
+            while (rs.next()) {
+                // 结果集不为空，并且，我们执行的sql语句，入股哦有结果，肯定只有一条
+                Account account = new Account(); // 用实体类对象，接收，查询结果的记录
+                account.setId(rs.getInt("id"));
+                account.setCreateDate(rs.getDate("create_date"));
+                account.setIdcardNo(rs.getString("idcard_no"));
+                account.setLoginName(rs.getString("login_name"));
+                account.setLoginPwd(rs.getString("login_passwd"));
+                account.setRealName(rs.getString("real_name"));
+                account.setStatus(rs.getString("status"));
+                account.setLastLoginTime(rs.getDate("last_login_time"));
+
+                accounts.add(account);
+            }
+            return accounts;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(conn);
+        }
+        return null;
+
+    }
 }

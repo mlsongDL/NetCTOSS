@@ -71,19 +71,32 @@ public class AccountServlet extends HttpServlet {
                     System.out.println("pageSize格式输入有误！pageSize默认设置为常量值");
                     pageSize = PAGE_SIZE;
                 }
-                // 根据页码和每页显式的记录条数查询数据
-                List<Account> accounts = accountService.findAccountsByPage(pageNo, pageSize);
+                // V2.0根据页码和每页显式的记录条数查询数据
+//                List<Account> accounts = accountService.findAccountsByPage(pageNo, pageSize);
+                // V3.0 再页面上点击搜索按钮，向list.acc发送身份证号，姓名，登录名以及状态等信息
+                // 根据以上提交过来的信息进行数据的分页+模糊查询
+                // like '% _'
+                // 接收模糊查询的四个条件
+                Account acc = new Account();
+                // 如果页面没有填写该表单控件，传过来的值不是null值，而是空白字符串
+                acc.setIdcardNo(req.getParameter("idcardNo") == null ? "" : req.getParameter("idcardNo"));
+                acc.setLoginName(req.getParameter("loginName") == null ? "" : req.getParameter("loginName"));
+                acc.setRealName(req.getParameter("realName") == null ? "" : req.getParameter("realName"));
+                acc.setStatus(req.getParameter("status") == null ? "-1" : req.getParameter("status"));
+                acc.setPageNo(pageNo);
+                acc.setPageSize(pageSize);
+
+                // TODO 使用业务处理，-》DAO进行sql构造，数据查询
+                List<Account> accounts = accountService.findAccountsByConditions(acc);
+
+
+
 
                 // 查询数据总记录条数
                 double totalCount = accountService.findAccountsCount();
 
                 // 计算总页数
                 int totalPage = (int)Math.ceil(totalCount/pageSize);
-
-
-                // V3.0 再页面上点击搜索按钮，向list.acc发送身份证号，姓名，登录名以及状态等信息
-                // 根据以上提交过来的信息进行数据的分页+模糊查询
-                // like '% _'
 
 
 
