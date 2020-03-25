@@ -1,4 +1,5 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String ctx = request.getContextPath();
     pageContext.setAttribute("ctx", ctx);
@@ -15,16 +16,21 @@
         <!--导航区域开始-->
         <div id="index_navi">
             <ul id="menu">
-                <li><a href="index.html" class="index_on"></a></li>
-                <li><a href="role/role_list.html" class="role_off"></a></li>
-                <li><a href="admin/admin_list.html" class="admin_off"></a></li>
-                <li><a href="fee/fee_list.html" class="fee_off"></a></li>
-                <li><a href="${ctx}/list.acc" class="account_off"></a></li>
-                <li><a href="service/service_list.html" class="service_off"></a></li>
-                <li><a href="bill/bill_list.html" class="bill_off"></a></li>
-                <li><a href="report/report_list.html" class="report_off"></a></li>
-                <li><a href="user/user_info.html" class="information_off"></a></li>
-                <li><a href="user/user_modi_pwd.html" class="password_off"></a></li>
+                <%--
+                    pageContext -> request -> session -> application
+                --%>
+                <c:forEach var="menu" items="${menus}">
+                    <li>
+                        <c:choose>
+                            <c:when test="${menu.menuName == '主页'}">
+                                <a href="${ctx}/${menu.menuHref}" class="${menu.menuCss}_on"></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${ctx}/${menu.menuHref}" class="${menu.menuCss}_off"></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </body>

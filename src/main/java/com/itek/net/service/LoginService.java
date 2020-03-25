@@ -6,7 +6,9 @@
 package com.itek.net.service;
 
 import com.itek.net.dao.AccountDAO;
+import com.itek.net.dao.MenuDao;
 import com.itek.net.domain.Account;
+import com.itek.net.domain.Menu;
 import com.itek.net.servlet.LoginServlet;
 import com.itek.net.util.DBUtil;
 import sun.rmi.runtime.Log;
@@ -20,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @program: net
@@ -31,9 +34,13 @@ public class LoginService {
 
     public LoginService() {
         accountDAO = new AccountDAO();
+        menuDao = new MenuDao();
     }
     // 操作account表的DAO组件，封装了所有对account表的sql操作
     private AccountDAO accountDAO;
+
+    // menu菜单表sql执行类
+    private MenuDao menuDao;
 
 
     /**
@@ -59,4 +66,12 @@ public class LoginService {
         return accountDAO.selectByUserAndPwd(username, pwd);
     }
 
+    /**
+     * 根据当前登录用户的id，查询用户所能访问的菜单列表
+     * @param userId
+     * @return
+     */
+    public List<Menu> findLoginUserMenus(Integer userId) {
+        return menuDao.selectCorrelativeMenusByUserId(userId);
+    }
 }

@@ -6,6 +6,7 @@
 package com.itek.net.servlet;
 
 import com.itek.net.domain.Account;
+import com.itek.net.domain.Menu;
 import com.itek.net.service.LoginService;
 import com.itek.net.util.DBUtil;
 
@@ -21,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @program: net
@@ -82,6 +84,10 @@ public class LoginServlet extends HttpServlet {
                     // 用户登录成功标识
                     HttpSession session = req.getSession();
                     session.setAttribute("loginUser", loginUser);
+
+                    // 查询当前登录成功的用户所拥有的访问权限
+                    List<Menu> menus = loginService.findLoginUserMenus(loginUser.getId());
+                    session.setAttribute("menus", menus);
 
                     resp.sendRedirect("/net/index.index");
                 } else {
